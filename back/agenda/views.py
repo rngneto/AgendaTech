@@ -42,3 +42,11 @@ def listar_usuarios(request):
             for u in usuarios
         ]
         return JsonResponse(usuarios_data, safe=False)
+
+def listar_usuarios_json(request):
+    usuarios = Usuario.objects.all()
+    usuarios_data = [
+        {'id': u.id, 'nome': u.nome, 'sobrenome': u.sobrenome}
+        for u in usuarios
+    ]
+    return JsonResponse(usuarios_data, safe=False, json_dumps_params={'ensure_ascii': False})

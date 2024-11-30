@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('teste/', views.teste, name='teste'),
     path('cadastrar_usuario/', views.cadastrar_usuario, name='cadastrar_usuario'),
-    path('listar_usuarios/', views.listar_usuarios, name='listar_usuarios'),  # Novo endpoint
+    path('listar_usuarios/', views.listar_usuarios, name='listar_usuarios'),  
+    path('listar_usuarios_json/', views.listar_usuarios_json, name='listar_usuarios_json'), 
 ]
