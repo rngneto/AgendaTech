@@ -1,27 +1,33 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
+import RegisterUser from './RegisterUser';
+import './App.css';
 
 function App() {
-  useEffect(() => {
-    // Fazendo uma requisição GET para testar a comunicação com o backend
-    axios.get('http://127.0.0.1:8000/api/teste/')
-      .then((response) => {
-        console.log('Resposta do backend:', response.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao se comunicar com o backend:', error);
-      });
-  }, []);
+  const [usuarioLogado, setUsuarioLogado] = useState(null);
+
+  const handleLogout = () => {
+    setUsuarioLogado(null); // Limpa o estado ao deslogar
+  };
 
   return (
-    <div className="App">
-      <Navbar />
-      <header className="App-header">
-        <h1>Front-End da Agenda Tech</h1>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar 
+          usuarioLogado={usuarioLogado} 
+          setUsuarioLogado={setUsuarioLogado} 
+          handleLogout={handleLogout} 
+        />
+        <Routes>
+          <Route 
+            path="/register" 
+            element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />} 
+          />
+          
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
