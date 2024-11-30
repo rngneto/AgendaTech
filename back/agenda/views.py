@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from .models import Usuario
 import json
 
 def home(request):
@@ -18,15 +18,27 @@ def teste(request):
 @csrf_exempt
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        dados = json.loads(request.body)
-
-        # Simula salvar no banco de dados (pode usar um modelo real depois)
-        usuario = {
-            "nome": dados.get("nome"),
-            "sobrenome": dados.get("sobrenome"),
-            "senha": dados.get("senha"),  # Não use senha em texto puro no real
-        }
-        # Retorna confirmação
-        return JsonResponse({"mensagem": "Usuário cadastrado com sucesso!", "usuario": usuario}, status=201)
-
+        try:
+            dados = json.loads(request.body)
+            usuario = Usuario.objects.create(
+                nome=dados.get('nome'),
+                sobrenome=dados.get('sobrenome'),
+                senha=dados.get('senha')  # Não use senha em texto puro em produção!
+            )
+            return JsonResponse({
+                "mensagem": "Usuário cadastrado com sucesso!",
+                "nome": usuario.nome,
+                "sobrenome": usuario.sobrenome
+            }, status=201)
+        except Exception as e:
+            return JsonResponse({"erro": str(e)}, status=400)
     return JsonResponse({"erro": "Método não permitido"}, status=405)
+
+def listar_usuarios(request):
+    if request.method == 'GET':
+        usuarios = Usuario.objects.all()
+        usuarios_data = [
+            {'id': u.id, 'nome': u.nome, 'sobrenome': u.sobrenome}
+            for u in usuarios
+        ]
+        return JsonResponse(usuarios_data, safe=False)

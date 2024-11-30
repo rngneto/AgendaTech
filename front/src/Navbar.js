@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 import agendaIcon from './assets/agenda.png';
 import userIcon from './assets/user-icon.png';
@@ -15,7 +16,9 @@ function Navbar({ usuarioLogado, setUsuarioLogado, handleLogout }) {
     <div className="navbar">
       {/* Logo e Barra de Pesquisa */}
       <div className="navbar-left">
-        <img src={agendaIcon} alt="Agenda" id="agenda-icon" />
+        <Link to="/">
+          <img src={agendaIcon} alt="Agenda" id="agenda-icon" />
+        </Link>
         <div className="search-bar">
           <div className="search-icon">
             <img src={searchIcon} alt="Lupa" />

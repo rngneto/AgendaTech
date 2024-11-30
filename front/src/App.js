@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import RegisterUser from './RegisterUser';
+import UserList from './UserList'; // Importa o componente de lista de usuários
 import './App.css';
 
 function App() {
@@ -14,17 +15,20 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Navbar 
-          usuarioLogado={usuarioLogado} 
-          setUsuarioLogado={setUsuarioLogado} 
-          handleLogout={handleLogout} 
+        <Navbar
+          usuarioLogado={usuarioLogado}
+          setUsuarioLogado={setUsuarioLogado}
+          handleLogout={handleLogout}
         />
         <Routes>
-          <Route 
-            path="/register" 
-            element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />} 
+          <Route
+            path="/register"
+            element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />}
           />
-          
+          <Route
+            path="/usuarios"
+            element={<UserList />} // Rota para listar os usuários
+          />
         </Routes>
       </div>
     </Router>

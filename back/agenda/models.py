@@ -1,10 +1,9 @@
 from django.db import models
 
-class Evento(models.Model):
-    titulo = models.CharField(max_length=100)
-    descricao = models.TextField()
-    data = models.DateField()
-    local = models.CharField(max_length=200)
+class Usuario(models.Model):
+    nome = models.CharField(max_length=100)
+    sobrenome = models.CharField(max_length=100)
+    senha = models.CharField(max_length=255)  # Use hashing em produção
 
     def __str__(self):
-        return self.titulo
+        return f"{self.nome} {self.sobrenome}"
