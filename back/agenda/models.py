@@ -7,3 +7,14 @@ class Usuario(models.Model):
 
     def __str__(self):
         return f"{self.nome} {self.sobrenome}"
+
+class Evento(models.Model):
+    nome = models.CharField(max_length=255)
+    data = models.DateField()
+    horario = models.TimeField()
+    tipo = models.CharField(max_length=50, choices=[('presencial', 'Presencial'), ('online', 'Online'), ('hibrido', 'Híbrido')])
+    local = models.CharField(max_length=255)
+    imagem = models.ImageField(upload_to='eventos/', null=True, blank=True)
+
+    def __str__(self):
+        return self.nome

@@ -28,9 +28,9 @@ function Navbar({ usuarioLogado, setUsuarioLogado, handleLogout }) {
         </div>
       </div>
 
-      {/* Link principal no centro */}
+      {/* Links principais no centro */}
       <div className="navbar-center">
-        <a href="#!" onClick={() => alert('CRIE SEU EVENTO')}>CRIE SEU EVENTO</a>
+        <Link to="/create-event" className="nav-link">Criar Evento</Link>       
       </div>
 
       {/* Área de usuário */}
@@ -51,9 +51,9 @@ function Navbar({ usuarioLogado, setUsuarioLogado, handleLogout }) {
               onClick={toggleUserMenu} 
             />
             <div className={`user-menu ${menuVisible ? '' : 'hidden'}`}>
-              <a href="#!" onClick={() => alert('Meus Eventos')}>Meus Eventos</a>
-              <a href="#!" onClick={() => alert('Minha Conta')}>Minha Conta</a>
-              <a href="#!" onClick={handleLogout}>Sair</a>
+              <Link to="/meus-eventos" className="menu-link">Meus Eventos</Link>
+              <Link to="/minha-conta" className="menu-link">Minha Conta</Link>
+              <a href="#!" className="menu-link" onClick={handleLogout}>Sair</a>
             </div>
           </div>
         )}
