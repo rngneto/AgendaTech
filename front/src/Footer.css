@@ -1,0 +1,30 @@
+.footer {
+    width: 100%;
+    background-color: #f8f9fa; /* Cor de fundo suave */
+    padding: 1rem 0; /* Espaçamento interno */
+    position: relative;
+    bottom: 0;
+  }
+  
+  .container {
+    max-width: 960px; /* Limitar a largura do conteúdo */
+    margin: 0 auto; /* Centralizar o conteúdo */
+  }
+  
+  .nav-link {
+    color: #6c757d; /* Cor dos links */
+    transition: color 0.3s; /* Transição suave para a cor */
+  }
+  
+  .nav-link:hover {
+    color: #0d6efd; /* Mudar a cor do link ao passar o mouse */
+  }
+  
+  .text-body-secondary {
+    color: #6c757d !important; /* Certificar que o texto usa cor secundária */
+  }
+  
+  .text-center {
+    font-size: 14px; /* Ajustar o tamanho da fonte do texto centralizado */
+  }
+  

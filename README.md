@@ -27,7 +27,7 @@ git clone https://github.com/rngneto/AgendaTech.git
 ```bash
 cd AgendaTech
 ```
-##Configurando o Backend (Django)
+## Configurando o Backend (Django)
 Navegue até a pasta do backend:
 ```bash
 cd back
@@ -71,7 +71,7 @@ npm install
 ## Estrutura dos Endpoints
 Backend:
 
-http://127.0.0.1:8000/api/teste/: Endpoint para testar a comunicação entre frontend e backend.
+http://127.0.0.1:8000/api/teste/
 
 ## Dependências
 Backend (requirements.txt):

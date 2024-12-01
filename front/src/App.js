@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
+import Eventos from './Eventos';
 import RegisterUser from './RegisterUser';
-import UserList from './UserList'; // Importa o componente de lista de usuários
+import UserList from './UserList'; 
+import About from './About';
+import Footer from './Footer';
+import ThemeToggle from './ThemeToggle';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
 
 function App() {
@@ -20,16 +26,21 @@ function App() {
           setUsuarioLogado={setUsuarioLogado}
           handleLogout={handleLogout}
         />
+        
+        {/* Define as rotas */}
         <Routes>
-          <Route
-            path="/register"
-            element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />}
-          />
-          <Route
-            path="/usuarios"
-            element={<UserList />} // Rota para listar os usuários
-          />
+          {/* Página inicial mostrando eventos */}
+          <Route path="/" element={<Eventos />} />
+          {/* Página de cadastro */}
+          <Route path="/register" element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />} />
+          {/* Página de usuários */}
+          <Route path="/usuarios" element={<UserList />} />
+          <Route path="/about" element={<About />} />
         </Routes>
+        
+        {/* Componente Footer que será exibido em todas as páginas */}
+        <Footer />
+        <ThemeToggle />
       </div>
     </Router>
   );
