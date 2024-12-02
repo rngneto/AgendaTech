@@ -20,6 +20,5 @@ urlpatterns = [
     path('listar_usuarios/', views.listar_usuarios, name='listar_usuarios'),
     path('listar_usuarios_json/', views.listar_usuarios_json, name='listar_usuarios_json'),
     path('cadastrar_evento/', views.cadastrar_evento, name='cadastrar_evento'),
-    path('listar_eventos/', views.listar_eventos, name='listar_eventos'),
-    path('limpar_bd/', limpar_bd, name='limpar_bd'),
+    path('listar_eventos/', views.listar_eventos, name='listar_eventos'),    
 ]

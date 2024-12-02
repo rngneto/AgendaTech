@@ -12,11 +12,15 @@ function Navbar({ usuarioLogado, setUsuarioLogado, handleLogout }) {
     setMenuVisible(!menuVisible);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="navbar">
       {/* Logo e Barra de Pesquisa */}
       <div className="navbar-left">
-        <Link to="/">
+        <Link to="/" onClick={scrollToTop}>
           <img src={agendaIcon} alt="Agenda" id="agenda-icon" />
         </Link>
         <div className="search-bar">

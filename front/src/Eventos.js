@@ -1,43 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import './Eventos.css';
 
 const Eventos = () => {
   const [eventos, setEventos] = useState([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
-  const eventosPorPagina = 9;
+  const eventosPorPagina = 12; // Alterado para exibir 12 eventos por página
 
   useEffect(() => {
     const carregarEventos = async () => {
       try {
-        const resposta = await fetch(`/api/eventos?page=${paginaAtual}&limit=${eventosPorPagina}`);
+        // Faz a requisição ao backend
+        const resposta = await fetch(`http://localhost:8000/api/listar_eventos?page=${paginaAtual}`);
         const dados = await resposta.json();
 
-        // Supondo que o backend retorna `eventos` e `totalPaginas`.
+        // Atualiza os estados com os dados do backend
         setEventos(dados.eventos || []);
-        setTotalPaginas(dados.totalPaginas || 1);
+        setTotalPaginas(dados.total_paginas || 1);
       } catch (erro) {
         console.error('Erro ao carregar eventos:', erro);
-        setEventos([]);
+        setEventos([]); // Caso ocorra erro, limpa os eventos
       }
     };
 
     carregarEventos();
   }, [paginaAtual]);
-
-  // Preenche os slots vazios com cards em branco, caso haja menos de 9 eventos na página.
-  const eventosCompletos = [...eventos];
-  while (eventosCompletos.length < eventosPorPagina) {
-    eventosCompletos.push({
-      id: `placeholder-${eventosCompletos.length + 1}`,
-      nome: '',
-      data: '',
-      horario: '',
-      tipo: '',
-      local: '',
-      link: '',
-      vazio: true, // Marca este card como vazio.
-    });
-  }
 
   const mudarPagina = (novaPagina) => {
     if (novaPagina > 0 && novaPagina <= totalPaginas) {
@@ -56,29 +43,36 @@ const Eventos = () => {
 
       <div className="album py-5 bg-body-tertiary">
         <div className="container">
-          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {eventosCompletos.map((evento) => (
+          <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            {eventos.map((evento) => (
               <div className="col" key={evento.id}>
-                <div className={`card shadow-sm ${evento.vazio ? 'bg-light' : ''}`}>
+                <div className="card shadow-sm evento-card">
+                  {evento.imagem && (
+                    <img
+                      src={`http://localhost:8000${evento.imagem}`}
+                      alt={evento.nome}
+                      className="card-img-top"
+                    />
+                  )}
                   <div className="card-body">
-                    <h5 className="card-title">{evento.nome || 'Nome do Evento'}</h5>
+                    <h5 className="card-title">{evento.nome}</h5>
                     <p className="card-text">
-                      Data: {evento.data || '---'}
+                      <strong>Data:</strong> {evento.data || '---'}
                       <br />
-                      Horário: {evento.horario || '---'}
+                      <strong>Horário:</strong> {evento.horario || '---'}
                       <br />
-                      Tipo: {evento.tipo || '---'}
+                      <strong>Tipo:</strong> {evento.tipo || '---'}
                       <br />
-                      Local: {evento.local || '---'}
-                      <br />
-                      {evento.link ? (
-                        <a href={evento.link} className="btn btn-link">
-                          Saiba mais
-                        </a>
-                      ) : (
-                        'Link não disponível'
-                      )}
+                      <strong>Local:</strong> {evento.local || '---'}
                     </p>
+                    <a
+                      href={`/eventos/${evento.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary mt-2"
+                    >
+                      Saiba mais
+                    </a>
                   </div>
                 </div>
               </div>

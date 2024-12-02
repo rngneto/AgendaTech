@@ -6,7 +6,11 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from .models import Usuario, Evento
 from .serializers import UsuarioSerializer, EventoSerializer
+from PIL import Image
 import json
+
+ALLOWED_FORMATS = ['PNG', 'JPEG', 'JPG']
+MAX_WIDTH, MAX_HEIGHT = 1920, 1080
 
 def home(request):
     """Página inicial do backend com links estilizados para os endpoints"""
@@ -16,8 +20,7 @@ def home(request):
         {"nome": "Listar Usuários", "url": reverse('listar_usuarios')},
         {"nome": "Listar Usuários (JSON)", "url": reverse('listar_usuarios_json')},
         {"nome": "Cadastrar Evento", "url": reverse('cadastrar_evento')},
-        {"nome": "Listar Eventos", "url": reverse('listar_eventos')},
-        {"nome": "Limpar Banco de Dados", "url": reverse('limpar_bd')},    
+        {"nome": "Listar Eventos", "url": reverse('listar_eventos')},       
     ]
     html_content = """
     <html>
@@ -140,25 +143,42 @@ def listar_usuarios(request):
 def cadastrar_evento(request):
     """Cadastra um novo evento"""
     try:
-        data = json.loads(request.body)
-        evento = Evento.objects.create(
-            nome=data.get('nome'),
-            data=data.get('data'),
-            horario=data.get('horario'),
-            tipo=data.get('tipo'),
-            local=data.get('local'),
-            imagem=data.get('imagem')  # Suporte para imagens
-        )
-        return JsonResponse({"mensagem": "Evento cadastrado com sucesso!", "id": evento.id}, status=201, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        return JsonResponse({"erro": f"Erro ao cadastrar evento: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
+        nome = request.POST.get('nome')
+        data = request.POST.get('data')
+        horario = request.POST.get('horario')
+        tipo = request.POST.get('tipo')
+        local = request.POST.get('local')
+        imagem = request.FILES.get('imagem')
 
+        # Verificar formato e dimensões da imagem
+        if imagem:
+            try:
+                with Image.open(imagem) as img:
+                    if img.format.upper() not in ALLOWED_FORMATS:
+                        return JsonResponse({"erro": "Formato de imagem não suportado"}, status=400)
+                    if img.width > MAX_WIDTH or img.height > MAX_HEIGHT:
+                        return JsonResponse({"erro": "Imagem excede as dimensões permitidas"}, status=400)
+            except Exception as e:
+                return JsonResponse({"erro": f"Erro ao processar a imagem: {str(e)}"}, status=400)
+
+        evento = Evento.objects.create(
+            nome=nome,
+            data=data,
+            horario=horario,
+            tipo=tipo,
+            local=local,
+            imagem=imagem
+        )
+        return JsonResponse({"mensagem": "Evento cadastrado com sucesso!", "id": evento.id}, status=201)
+
+    except Exception as e:
+        return JsonResponse({"erro": f"Erro ao cadastrar evento: {str(e)}"}, status=400)
 
 def listar_eventos(request):
     """Lista eventos com suporte a paginação"""
     try:
-        eventos = Evento.objects.all().order_by('-data')
-        paginator = Paginator(eventos, 9)  # Paginação: 9 eventos por página
+        eventos = Evento.objects.all().order_by('data')
+        paginator = Paginator(eventos, 12)  # Paginação: 12 eventos por página
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
@@ -181,7 +201,7 @@ def listar_eventos(request):
             "total_paginas": paginator.num_pages,
         }, json_dumps_params={'ensure_ascii': False})
     except Exception as e:
-        return JsonResponse({"erro": f"Erro ao listar eventos: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
+        return JsonResponse({"erro": f"Erro ao listar eventos: {str(e)}"}, status=400)
 
 def listar_usuarios_json(request):
     """Lista todos os usuários com suporte a caracteres especiais"""

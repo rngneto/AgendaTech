@@ -8,6 +8,9 @@ function CreateEvent() {
     horario: '',
     tipo: 'presencial',
     local: '',
+    link: '',
+    palestrantes: ['', '', ''], // Array para até 3 palestrantes
+    descricao: '',
     imagem: null,
   });
 
@@ -20,16 +23,26 @@ function CreateEvent() {
     setFormData({ ...formData, imagem: e.target.files[0] });
   };
 
+  const handlePalestranteChange = (index, value) => {
+    const updatedPalestrantes = [...formData.palestrantes];
+    updatedPalestrantes[index] = value;
+    setFormData({ ...formData, palestrantes: updatedPalestrantes });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formDataToSubmit = new FormData();
     for (let key in formData) {
-      formDataToSubmit.append(key, formData[key]);
+      if (key === 'palestrantes') {
+        formDataToSubmit.append(key, formData[key].join(',')); // Envia os palestrantes como string separada por vírgulas
+      } else {
+        formDataToSubmit.append(key, formData[key]);
+      }
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/eventos', {
+      const response = await fetch('http://localhost:8000/api/cadastrar_evento/', {
         method: 'POST',
         body: formDataToSubmit,
       });
@@ -42,6 +55,9 @@ function CreateEvent() {
           horario: '',
           tipo: 'presencial',
           local: '',
+          link: '',
+          palestrantes: ['', '', ''],
+          descricao: '',
           imagem: null,
         });
       } else {
@@ -104,6 +120,35 @@ function CreateEvent() {
             onChange={handleChange}
             required
           />
+        </div>
+        <div>
+          <label>Link</label>
+          <input
+            type="url"
+            name="link"
+            value={formData.link}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Palestrantes</label>
+          {formData.palestrantes.map((palestrante, index) => (
+            <input
+              key={index}
+              type="text"
+              value={palestrante}
+              onChange={(e) => handlePalestranteChange(index, e.target.value)}
+              placeholder={`Palestrante ${index + 1}`}
+            />
+          ))}
+        </div>
+        <div>
+          <label>Descrição</label>
+          <textarea
+            name="descricao"
+            value={formData.descricao}
+            onChange={handleChange}
+          ></textarea>
         </div>
         <div>
           <label>Imagem</label>

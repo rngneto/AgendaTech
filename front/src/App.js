@@ -8,6 +8,7 @@ import About from './About';
 import Footer from './Footer';
 import ThemeToggle from './ThemeToggle';
 import CreateEvent from './CreateEvent';
+import DetalhesEvento from './DetalhesEvento';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/" element={<Eventos />} />
           {/* Página de cadastro de eventos */}
           <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/eventos/:id" element={<DetalhesEvento />} />
           {/* Página de cadastro de usuários */}
           <Route path="/register" element={<RegisterUser setUsuarioLogado={setUsuarioLogado} />} />
           {/* Página de usuários */}
