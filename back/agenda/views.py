@@ -9,8 +9,59 @@ import json
 
 
 def home(request):
-    """Página inicial do backend"""
-    return HttpResponse('<h1>Back-end da Agenda Tech!</h1>')
+    """Página inicial do backend com links para os endpoints"""
+    endpoints = [
+        {"path": "/api/", "name": "Home"},
+        {"path": "/api/teste/", "name": "Teste"},
+        {"path": "/api/cadastrar_usuario/", "name": "Cadastrar Usuário"},
+        {"path": "/api/listar_usuarios/", "name": "Listar Usuários"},
+        {"path": "/api/listar_usuarios_json/", "name": "Listar Usuários JSON"},
+        {"path": "/api/cadastrar_evento/", "name": "Cadastrar Evento"},
+        {"path": "/api/listar_eventos/", "name": "Listar Eventos"},
+    ]
+
+    html = """
+    <html>
+        <head>
+            <title>Agenda Tech - Backend</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                h1 {
+                    color: #333;
+                }
+                ul {
+                    list-style-type: none;
+                    padding: 0;
+                }
+                li {
+                    margin: 10px 0;
+                }
+                a {
+                    text-decoration: none;
+                    color: #007bff;
+                }
+                a:hover {
+                    color: #0056b3;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Back-end da Agenda Tech</h1>
+            <p>Bem-vindo ao backend! Aqui estão os endpoints disponíveis:</p>
+            <ul>
+    """
+    for endpoint in endpoints:
+        html += f'<li><a href="{endpoint["path"]}">{endpoint["name"]}</a></li>'
+    
+    html += """
+            </ul>
+        </body>
+    </html>
+    """
+    return HttpResponse(html)
 
 
 def teste(request):

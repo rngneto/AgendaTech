@@ -11,6 +11,8 @@ from .views import (
     listar_eventos,
 )
 
+
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('teste/', views.teste, name='teste'),
