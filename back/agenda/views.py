@@ -3,73 +3,101 @@ from rest_framework.response import Response
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from django.urls import reverse
 from .models import Usuario, Evento
 from .serializers import UsuarioSerializer, EventoSerializer
 import json
 
-
 def home(request):
-    """Página inicial do backend com links para os endpoints"""
-    endpoints = [
-        {"path": "/api/", "name": "Home"},
-        {"path": "/api/teste/", "name": "Teste"},
-        {"path": "/api/cadastrar_usuario/", "name": "Cadastrar Usuário"},
-        {"path": "/api/listar_usuarios/", "name": "Listar Usuários"},
-        {"path": "/api/listar_usuarios_json/", "name": "Listar Usuários JSON"},
-        {"path": "/api/cadastrar_evento/", "name": "Cadastrar Evento"},
-        {"path": "/api/listar_eventos/", "name": "Listar Eventos"},
+    """Página inicial do backend com links estilizados para os endpoints"""
+    links = [
+        {"nome": "Teste", "url": reverse('teste')},
+        {"nome": "Cadastrar Usuário", "url": reverse('cadastrar_usuario')},
+        {"nome": "Listar Usuários", "url": reverse('listar_usuarios')},
+        {"nome": "Listar Usuários (JSON)", "url": reverse('listar_usuarios_json')},
+        {"nome": "Cadastrar Evento", "url": reverse('cadastrar_evento')},
+        {"nome": "Listar Eventos", "url": reverse('listar_eventos')},
+        {"nome": "Limpar Banco de Dados", "url": reverse('limpar_bd')},    
     ]
-
-    html = """
+    html_content = """
     <html>
-        <head>
-            <title>Agenda Tech - Backend</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                }
-                h1 {
-                    color: #333;
-                }
-                ul {
-                    list-style-type: none;
-                    padding: 0;
-                }
-                li {
-                    margin: 10px 0;
-                }
-                a {
-                    text-decoration: none;
-                    color: #007bff;
-                }
-                a:hover {
-                    color: #0056b3;
-                }
-            </style>
-        </head>
-        <body>
-            <h1>Back-end da Agenda Tech</h1>
-            <p>Bem-vindo ao backend! Aqui estão os endpoints disponíveis:</p>
+    <head>
+        <title>Backend da Agenda Tech</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            h1 {
+                color: #142f68;
+                text-align: center;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+            li {
+                margin: 10px 0;
+            }
+            a {
+                text-decoration: none;
+                color: white;
+                background-color: #142f68;
+                padding: 10px 15px;
+                border-radius: 5px;
+                display: inline-block;
+                transition: background-color 0.3s;
+            }
+            a:hover {
+                background-color: #0d2145;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                text-align: center;
+            }
+            .clear-btn {
+                color: white;
+                background-color: red;
+                padding: 10px 15px;
+                border-radius: 5px;
+                text-decoration: none;
+                display: inline-block;
+                transition: background-color 0.3s;
+            }
+            .clear-btn:hover {
+                background-color: darkred;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Bem-vindo ao Backend da Agenda Tech!</h1>
             <ul>
     """
-    for endpoint in endpoints:
-        html += f'<li><a href="{endpoint["path"]}">{endpoint["name"]}</a></li>'
-    
-    html += """
+    for link in links:
+        html_content += f'<li><a href="{link["url"]}">{link["nome"]}</a></li>'
+    html_content += """
             </ul>
-        </body>
+            <form method="post" action="/limpar_bd/">
+                <button type="submit" class="clear-btn" onclick="return confirm('Tem certeza que deseja limpar o banco de dados?')">Limpar Banco de Dados</button>
+            </form>
+        </div>
+    </body>
     </html>
     """
-    return HttpResponse(html)
-
+    return HttpResponse(html_content)
 
 def teste(request):
     """Endpoint de teste para verificar o funcionamento do backend"""
     data = {
         'mensagem': 'Backend está funcionando e recebendo requisições do frontend!'
     }
-    return JsonResponse(data)
+    return JsonResponse(data, json_dumps_params={'ensure_ascii': False})
 
 
 @csrf_exempt
@@ -87,10 +115,10 @@ def cadastrar_usuario(request):
                 "mensagem": "Usuário cadastrado com sucesso!",
                 "nome": usuario.nome,
                 "sobrenome": usuario.sobrenome
-            }, status=201)
+            }, status=201, json_dumps_params={'ensure_ascii': False})
         except Exception as e:
-            return JsonResponse({"erro": f"Erro ao cadastrar usuário: {str(e)}"}, status=400)
-    return JsonResponse({"erro": "Método não permitido"}, status=405)
+            return JsonResponse({"erro": f"Erro ao cadastrar usuário: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({"erro": "Método não permitido"}, status=405, json_dumps_params={'ensure_ascii': False})
 
 
 def listar_usuarios(request):
@@ -102,23 +130,10 @@ def listar_usuarios(request):
                 {'id': u.id, 'nome': u.nome, 'sobrenome': u.sobrenome}
                 for u in usuarios
             ]
-            return JsonResponse(usuarios_data, safe=False)
+            return JsonResponse(usuarios_data, safe=False, json_dumps_params={'ensure_ascii': False})
         except Exception as e:
-            return JsonResponse({"erro": f"Erro ao listar usuários: {str(e)}"}, status=400)
-    return JsonResponse({"erro": "Método não permitido"}, status=405)
-
-
-def listar_usuarios_json(request):
-    """Lista todos os usuários com suporte a caracteres especiais"""
-    try:
-        usuarios = Usuario.objects.all()
-        usuarios_data = [
-            {'id': u.id, 'nome': u.nome, 'sobrenome': u.sobrenome}
-            for u in usuarios
-        ]
-        return JsonResponse(usuarios_data, safe=False, json_dumps_params={'ensure_ascii': False})
-    except Exception as e:
-        return JsonResponse({"erro": f"Erro ao listar usuários: {str(e)}"}, status=400)
+            return JsonResponse({"erro": f"Erro ao listar usuários: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
+    return JsonResponse({"erro": "Método não permitido"}, status=405, json_dumps_params={'ensure_ascii': False})
 
 
 @api_view(['POST'])
@@ -134,9 +149,9 @@ def cadastrar_evento(request):
             local=data.get('local'),
             imagem=data.get('imagem')  # Suporte para imagens
         )
-        return JsonResponse({"mensagem": "Evento cadastrado com sucesso!", "id": evento.id}, status=201)
+        return JsonResponse({"mensagem": "Evento cadastrado com sucesso!", "id": evento.id}, status=201, json_dumps_params={'ensure_ascii': False})
     except Exception as e:
-        return JsonResponse({"erro": f"Erro ao cadastrar evento: {str(e)}"}, status=400)
+        return JsonResponse({"erro": f"Erro ao cadastrar evento: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
 
 
 def listar_eventos(request):
@@ -166,4 +181,27 @@ def listar_eventos(request):
             "total_paginas": paginator.num_pages,
         }, json_dumps_params={'ensure_ascii': False})
     except Exception as e:
-        return JsonResponse({"erro": f"Erro ao listar eventos: {str(e)}"}, status=400)
+        return JsonResponse({"erro": f"Erro ao listar eventos: {str(e)}"}, status=400, json_dumps_params={'ensure_ascii': False})
+
+def listar_usuarios_json(request):
+    """Lista todos os usuários com suporte a caracteres especiais"""
+    try:
+        usuarios = Usuario.objects.all()
+        usuarios_data = [
+            {'id': u.id, 'nome': u.nome, 'sobrenome': u.sobrenome}
+            for u in usuarios
+        ]
+        return JsonResponse(usuarios_data, safe=False, json_dumps_params={'ensure_ascii': False})
+    except Exception as e:
+        return JsonResponse({"erro": f"Erro ao listar usuários: {str(e)}"}, status=400)
+
+@csrf_exempt
+def limpar_bd(request):
+    if request.method == 'POST':
+        try:
+            Usuario.objects.all().delete()
+            Evento.objects.all().delete()
+            return JsonResponse({"mensagem": "Banco de dados limpo com sucesso!"}, status=200)
+        except Exception as e:
+            return JsonResponse({"erro": f"Erro ao limpar o banco: {str(e)}"}, status=400)
+    return JsonResponse({"erro": "Método não permitido"}, status=405)
