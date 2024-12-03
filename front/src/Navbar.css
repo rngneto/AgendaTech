@@ -1,0 +1,305 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #142f68;
+    padding: 10px;
+    color: white;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-left img {
+    height: 40px;
+    cursor: pointer;
+    margin-right: 15px; /* Espaço entre o logo e a barra de pesquisa */
+  }
+  
+  .navbar-center a {
+    margin: 0 15px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .navbar-center a:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar-right img {
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  /* Estilos da barra de pesquisa */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 4px;
+  }
+  
+  .search-icon img {
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  #search-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 14px;
+    padding: 5px;
+    color: #333;
+  }
+  
+  .search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilo da área de cidade */
+.city-area {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-left: 20px; /* Distância da barra de pesquisa */
+  }
+  
+  .city-header {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .city-header:hover {
+    background-color: #eaeaea;
+  }
+  
+  .location-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  
+  .current-city {
+    font-weight: bold;
+    color: #0073e6;
+  }
+  
+  /* Modal de seleção de cidade */
+  .city-modal {
+    position: absolute;
+    top: 50px; /* Ajustado para não sobrepor */
+    left: 0;
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    z-index: 1000;
+  }
+  
+  .city-modal h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .city-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .city-list li {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .city-list li:hover {
+    background-color: #f1f1f1;
+    color: #0073e6;
+  }
+
+  .settings-icon {
+    height: 24px; /* Altura do ícone de configurações */
+    cursor: pointer;
+    vertical-align: middle; /* Alinhar o ícone verticalmente ao centro */
+    margin-left: 5px; /* Espaço entre o ícone e os outros itens */
+  }
+  
+/* Estilo da barra de navegação */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #142f68;
+  padding: 10px;
+  color: white;
+}
+
+.navbar-left .logo {
+  height: 40px;
+  cursor: pointer;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 15px;
+}
+
+.search-icon img {
+  height: 20px;
+  margin-right: 5px;
+}
+
+#search-input {
+  border: none;
+  outline: none;
+  background: none;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.navbar-center a {
+  margin: 0 15px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navbar-center a:hover {
+  text-decoration: underline;
+}
+
+.navbar-right {
+  position: relative;
+}
+
+.navbar-right .user-icon {
+  height: 40px;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background-color: #142f68;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.user-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.user-menu a:hover {
+  background-color: #1a3a8f;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Estilo do botão "Cadastre-se" */
+.register-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.register-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo do menu de usuário */
+.user-area {
+  position: relative;
+}
+
+.user-icon {
+  height: 40px;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background-color: #142f68;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.user-menu a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.user-menu a:hover {
+  background-color: #1a3a8f;
+}
+
+.hidden {
+  display: none;
+}

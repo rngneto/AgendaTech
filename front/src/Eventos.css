@@ -1,0 +1,21 @@
+/* Garantindo tamanho fixo para os cards */
+.card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-img-top {
+  max-height: 180px;
+  object-fit: cover; /* Ajusta a imagem dentro do container */
+}
+
+/* Efeito de destaque ao passar o mouse */
+.evento-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.evento-card:hover {
+  transform: scale(1.05); /* Aumenta levemente o card */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adiciona um efeito de sombra */
+}

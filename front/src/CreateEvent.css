@@ -1,0 +1,146 @@
+.create-event-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.create-event-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.create-event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.create-event-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.create-event-form input,
+.create-event-form select,
+.create-event-form textarea {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.create-event-form input:focus,
+.create-event-form select:focus,
+.create-event-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.create-event-form .image-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.create-event-form button {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-event-form button:hover {
+  background-color: #0056b3;
+}
+
+.create-event-footer {
+  text-align: center;
+  margin-top: 15px;
+  color: #666;
+}
+
+.create-event-footer a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.create-event-footer a:hover {
+  color: #0056b3;
+}
+
+
+
+/* Área do recorte */
+/* Contêiner principal em formato vertical */
+.cropper-container-vertical {
+  max-width: 400px; /* Limita a largura máxima */
+  margin: 0 auto; /* Centraliza na página */
+  display: flex;
+  flex-direction: column; /* Empilha os elementos verticalmente */
+  align-items: center;
+  gap: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Área de recorte */
+.cropper-area {
+  width: 100%;
+  height: 300px; /* Altura fixa */
+  position: relative;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Botões de ação */
+.cropper-buttons {
+  width: 100%; /* Botões ocupam toda a largura */
+  display: flex;
+  justify-content: space-between; /* Espaça os botões */
+  gap: 10px;
+}
+
+/* Botões */
+.cropper-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cropper-buttons button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .cropper-container-vertical {
+    padding: 15px;
+  }
+
+  .cropper-area {
+    height: 250px; /* Reduz a altura em telas menores */
+  }
+}
+
