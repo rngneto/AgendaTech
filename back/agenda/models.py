@@ -20,13 +20,3 @@ class Evento(models.Model):
 
     def __str__(self):
         return self.nome
-
-
-class Palestrante(models.Model):
-    nome = models.CharField(max_length=200)
-    email = models.EmailField(blank=True, null=True)
-    evento = models.ForeignKey('Evento', on_delete=models.CASCADE, related_name='lista_palestrantes')  # Alterado related_name
-
-    def __str__(self):
-        return self.nome
-
