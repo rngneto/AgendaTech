@@ -15,16 +15,13 @@ Certifique-se de que as seguintes ferramentas estão instaladas no seu sistema:
 - ⚙️ Node.js (versão 18 ou superior): Necessário para rodar o frontend (React).
 
 ## Configuração: Ubuntu 🐧
-`1.` Atualizar o Sistema
-Atualize os pacotes do sistema e instale os pacotes básicos:
+`1.` Atualizar o Sistema - Atualize os pacotes do sistema e instale os pacotes básicos:
 
 ```
 sudo apt update
 sudo apt upgrade -y
 ```
-`2.` Instalar Dependências Essenciais
-Instale o Python:
-
+`2.` Instalar Dependências Essenciais - Instale o Python:
 ```
 sudo apt install python3 -y
 ```
@@ -82,8 +79,7 @@ git clone https://github.com/rngneto/AgendaTech.git
 ```
 cd AgendaTech
 ```
-`11.` Configure o Backend
-Navegue para a pasta back:
+`11.` Configure o Backend - Navegue para a pasta back:
 ```
 cd back
 ```
@@ -110,8 +106,7 @@ python manage.py runserver
 ```
 O servidor estará rodando em: http://127.0.0.1:8000/
 
-`17.` Configure o Frontend
-Abra um novo terminal e navegue para a pasta front:
+`17.` Configure o Frontend - Abra um novo terminal e navegue para a pasta front:
 ```
 cd ~/AgendaTech/front
 ```
@@ -128,22 +123,19 @@ O servidor estará rodando em: http://localhost:3000/
 ***
 
 ## Configuração: Windows 🖥️
-`1.` Instale o Python
-Faça o download do instalador do Python em: https://www.python.org/downloads/  
+`1.` Instale o Python - Faça o download do instalador do Python em: https://www.python.org/downloads/  
 Drante a instalação, marque a opção "Add Python to PATH". Verifique a instalação (Opcional):
 ```
 python --version
 pip --version
 ```
-`2.` Instale o Node.js
-Faça o download do instalador do Node.js em: https://nodejs.org/pt   
+`2.` Instale o Node.js - Faça o download do instalador do Node.js em: https://nodejs.org/pt   
 Verifique a instalação:
 ```
 node --version
 npm --version
 ```
-`3.` Instale o Git
-Faça o download do instalador do Git em git-scm.com.
+`3.` Instale o Git - Faça o download do instalador do Git em git-scm.com.
 Verifique a instalação:
 ```
 git --version
@@ -184,8 +176,7 @@ python manage.py runserver
 
 O servidor estará rodando em: http://127.0.0.1:8000/
 
-`12.` Configure o Frontend
-Abra um novo terminal e navegue para a pasta front:
+`12.` Configure o Frontend - Abra um novo terminal e navegue para a pasta front:
 ```
 cd C:\caminho\do\projeto\AgendaTech\front
 ```
