@@ -14,7 +14,7 @@ Certifique-se de que as seguintes ferramentas estão instaladas no seu sistema:
 - 🐍 Python 3.12: Necessário para rodar o backend (Django).
 - ⚙️ Node.js (versão 18 ou superior): Necessário para rodar o frontend (React).
 
-## Ambiente Ubuntu 🐧
+## Configuração: Ubuntu 🐧
 `1.` Atualizar o Sistema
 Atualize os pacotes do sistema e instale os pacotes básicos:
 
@@ -127,7 +127,7 @@ O servidor estará rodando em: http://localhost:3000/
 
 ***
 
-## Ambiente Windows 🖥️
+## Configuração: Windows 🖥️
 `1.` Instale o Python
 Faça o download do instalador do Python em: https://www.python.org/downloads/  
 Drante a instalação, marque a opção "Add Python to PATH". Verifique a instalação (Opcional):
@@ -198,3 +198,10 @@ npm install
 npm start
 ```
 O servidor estará rodando em: http://localhost:3000/
+
+***
+Equipe AgendaTech:
+- 🛠️[Delphino Luciani](https://github.com/dlpaf)
+- 🛠️[Vival José](https://github.com/VivalJose) 
+- 🛠️[Victor Matheus](https://github.com/Matheus21098)
+- 🛠️[Raimundo Neto](https://github.com/rngneto)  
