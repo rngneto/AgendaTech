@@ -9,7 +9,5 @@ urlpatterns = [
     path('', home),  # Página inicial
     path('limpar_bd/', limpar_bd, name='limpar_bd'),
     path('api/', include('agenda.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:  # Adiciona suporte a arquivos de mídia em modo DEBUG
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

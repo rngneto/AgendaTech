@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.urls import reverse
 from .models import Usuario, Evento
+from django.db import connection
 from .serializers import UsuarioSerializer, EventoSerializer
 from PIL import Image
 import json
@@ -150,8 +151,7 @@ def cadastrar_evento(request):
         tipo = request.POST.get('tipo')
         local = request.POST.get('local')
         link = request.POST.get('link')  # Novo campo obrigatório
-        descricao = request.POST.get('descricao')  # Novo campo obrigatório
-        palestrantes = request.POST.getlist('palestrantes[]')  # Lista de palestrantes (opcional)
+        descricao = request.POST.get('descricao')  # Novo campo obrigatório       
         imagem = request.FILES.get('imagem')
 
         # Verificar se os campos obrigatórios estão preenchidos
@@ -179,12 +179,7 @@ def cadastrar_evento(request):
             link=link,
             descricao=descricao,
             imagem=imagem
-        )
-
-        # Adicionar palestrantes ao evento (caso sejam fornecidos)
-        for palestrante in palestrantes:
-            if palestrante.strip():  # Ignorar palestrantes vazios
-                evento.palestrantes.add(palestrante)
+        )  
 
         return JsonResponse({"mensagem": "Evento cadastrado com sucesso!", "id": evento.id}, status=201)
 
@@ -209,8 +204,7 @@ def listar_eventos(request):
                 "local": evento.local,
                 "imagem": evento.imagem.url if evento.imagem else None,
                 "link": evento.link,
-                "descricao": evento.descricao,
-                "palestrantes": list(evento.lista_palestrantes.values_list('nome', flat=True)),  # Caso use 'lista_palestrantes'
+                "descricao": evento.descricao,                
             }
             for evento in page_obj.object_list
         ]
@@ -239,9 +233,16 @@ def listar_usuarios_json(request):
 def limpar_bd(request):
     if request.method == 'POST':
         try:
+            # Apagar todos os registros das tabelas
             Usuario.objects.all().delete()
             Evento.objects.all().delete()
-            return JsonResponse({"mensagem": "Banco de dados limpo com sucesso!"}, status=200)
+
+            # Reiniciar sequência de IDs
+            with connection.cursor() as cursor:
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name='agenda_usuario';")
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name='agenda_evento';")
+
+            return JsonResponse({"mensagem": "Banco de dados limpo com sucesso e IDs reiniciados!"}, status=200)
         except Exception as e:
             return JsonResponse({"erro": f"Erro ao limpar o banco: {str(e)}"}, status=400)
     return JsonResponse({"erro": "Método não permitido"}, status=405)
